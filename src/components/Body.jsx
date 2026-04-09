@@ -13,7 +13,10 @@ const Body = () => {
   const userData = useSelector(state => state.data) ;
 
   const fetchUser = async () => {
-    if(userData) return ;
+    if(userData) {
+      navigate("/feed") ;
+      return
+    } ;
     
     try{
       const res = await axios.get(BASE_URL + "/profile/view" , {withCredentials : true}) ;
