@@ -8,6 +8,7 @@ import { BASE_URL } from '../utils/constants';
 const Login = () => {
   const [emailId, setEmailId] = useState("anushka@gmail.com");
   const [password, setPassword] = useState("Anushka@123");
+  const [error, setError] = useState("");
   const dispatch = useDispatch() ;
   const navigate = useNavigate() ;
   
@@ -17,7 +18,8 @@ const handleLogin = async () => {
     dispatch(addUser(res.data)) ;
     navigate("/feed") ;
   } catch (err) {
-    console.log("Error in Login : " + err.message) ;
+    setError(err?.response?.data || "somthing went wrong") ;
+    console.log("Error in handlelogin : "+err) ;
   }
 }
   return (
@@ -49,6 +51,7 @@ const handleLogin = async () => {
               />
             </fieldset>
           </div>
+          <p className='text-red-500'>{error}</p>
           <div className="card-actions justify-center mt-4">
             <button className="btn btn-primary px-8" onClick={handleLogin}>Login</button>
           </div>
