@@ -22,7 +22,6 @@ const Requests = () => {
         try{
             const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id , {} , {withCredentials: true}) ;
             dispatch(removeRequest(_id))
-            console.log(res) ;
         } catch (err) {
             console.log("Error in review request : " + err.message) ;
         }
@@ -57,8 +56,8 @@ const Requests = () => {
                                 <p>{about}</p>
                             </div>
                             <div className=''>
-                                <button className="btn btn-active btn-primary mx-2" onClick={reviewRequest("rejected" , request._id)}>Reject</button>
-                                <button className="btn btn-active btn-secondary mx-2" onClick={reviewRequest("accepted" , request._id)}>Accept</button>
+                                <button className="btn btn-active btn-primary mx-2" onClick={() => reviewRequest("rejected" , request._id)}>Reject</button>
+                                <button className="btn btn-active btn-secondary mx-2" onClick={() => reviewRequest("accepted" , request._id)}>Accept</button>
 
                             </div>
                         </div>

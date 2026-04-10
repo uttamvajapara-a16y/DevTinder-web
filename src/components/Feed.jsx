@@ -11,7 +11,6 @@ const Feed = () => {
 
   const getFeed = async () => {
     try {
-      if (feed) return;
       const res = await axios.get(BASE_URL + "/feed", { withCredentials: true });
       dispatch(addFeed(res?.data)) ;
     } catch (err) {
@@ -22,6 +21,9 @@ const Feed = () => {
   useEffect(() => {
     getFeed();
   }, [])
+
+  if(!feed) return ;
+  if(feed.length === 0) return <p className='text-center text-xl my-10'>No New User Found</p>
 
   return (
     feed && <div>
