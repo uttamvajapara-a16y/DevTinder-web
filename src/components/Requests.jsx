@@ -18,12 +18,12 @@ const Requests = () => {
         }
     }
 
-    const reviewRequest = async (status , _id) => {
-        try{
-            const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id , {} , {withCredentials: true}) ;
+    const reviewRequest = async (status, _id) => {
+        try {
+            const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, { withCredentials: true });
             dispatch(removeRequest(_id))
         } catch (err) {
-            console.log("Error in review request : " + err.message) ;
+            console.log("Error in review request : " + err.message);
         }
     }
 
@@ -35,7 +35,7 @@ const Requests = () => {
     if (requests.length === 0) return <p className='text-center my-10 text-xl'>No Requests Found</p>
 
     return (
-        <div className='text-center my-5'>
+        <div className='text-center my-5 overflow-scroll pb-5'>
             <h1 className='text-white text-bold text-3xl'>Connection Requests</h1>
 
             {
@@ -43,21 +43,23 @@ const Requests = () => {
                     const { _id, firstName, lastName, photoUrl, age, gender, about } = request.fromUserId;
                     return (
                         <div key={_id} className='flex justify-between items-center gap-5 rounded-lg bg-base-300 p-4 w-1/3 m-4 text-left mx-auto'>
-                            <div>
-                                <img
-                                    src={photoUrl}
-                                    alt="user Photo"
-                                    className='w-20 h-20 rounded-full '
-                                />
-                            </div>
-                            <div>
-                                <h1 className='font-bold text-xl'>{firstName + " " + lastName}</h1>
-                                {gender && age && <p>{age + " , " + gender}</p>}
-                                <p>{about}</p>
+                            <div className='flex gap-5 overflow-hidden'>
+                                <div>
+                                    <img
+                                        src={photoUrl}
+                                        alt="user Photo"
+                                        className='w-20 h-20 rounded-full '
+                                    />
+                                </div>
+                                <div>
+                                    <h1 className='font-bold text-xl'>{firstName + " " + lastName}</h1>
+                                    {gender && age && <p>{age + " , " + gender}</p>}
+                                    <p>{about}</p>
+                                </div>
                             </div>
                             <div className=''>
-                                <button className="btn btn-active btn-primary mx-2" onClick={() => reviewRequest("rejected" , request._id)}>Reject</button>
-                                <button className="btn btn-active btn-secondary mx-2" onClick={() => reviewRequest("accepted" , request._id)}>Accept</button>
+                                <button className="btn btn-active btn-primary mx-2" onClick={() => reviewRequest("rejected", request._id)}>Reject</button>
+                                <button className="btn btn-active btn-secondary mx-2" onClick={() => reviewRequest("accepted", request._id)}>Accept</button>
 
                             </div>
                         </div>
