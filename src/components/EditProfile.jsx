@@ -35,7 +35,7 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className='flex justify-center gap-5'>
+      <div className='flex justify-center gap-5 overflow-hidden'>
         <div className='flex justify-center my-10'>
           <div className="card bg-base-300 w-130 shadow-xl">
             <div className="card-body">
@@ -73,7 +73,7 @@ const EditProfile = ({ user }) => {
                 </fieldset>
                 <fieldset className="fieldset">
                   <legend className="fieldset-legend">Gender</legend>
-                  <select defaultValue="Select Gender" className="select w-full" onChange={(e) => setGender(e.target.value)}>
+                  <select defaultValue="Select Gender" value={gender} className="select w-full" onChange={(e) => setGender(e.target.value)}>
                     <option disabled={true}>Select Gender</option>
                     <option>male</option>
                     <option>female</option>

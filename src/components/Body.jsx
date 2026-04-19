@@ -14,8 +14,7 @@ const Body = () => {
 
   const fetchUser = async () => {
     if(userData) {
-      navigate("/feed") ;
-      return
+      return navigate("/feed") ;
     } ;
     
     try{
@@ -34,7 +33,7 @@ const Body = () => {
   } , [])
 
   return (
-    <div>
+    <div className='pt-8 pb-10'>
       <NavBar/>
       <Outlet/>
       <Footer/>

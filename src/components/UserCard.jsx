@@ -18,7 +18,7 @@ const UserCard = ({ user }) => {
     }
 
     return (
-        <div className='flex justify-center my-10'>
+        <div className='flex justify-center items-center my-10'>
             <div className="card bg-base-300 w-96 shadow-sm">
                 <figure>
                     {photoUrl && <img
@@ -30,10 +30,10 @@ const UserCard = ({ user }) => {
                 <div className="card-body">
                     <h2 className="card-title">{firstName + " " + lastName}</h2>
                     {age && gender && <p>{age + " " + gender}</p>}
-                    {about && <p>{about}</p>}
+                    {about && <p className='break-all'>{about}</p>}
                     <div className="card-actions justify-center my-3">
-                        <button className="btn btn-primary" onClick={() => handleSendRequest("ignored" , _id)}>Ignore</button>
-                        <button className="btn btn-secondary" onClick={() => handleSendRequest("interested" , _id)}>Interested</button>
+                        <button className="btn btn-secondary" onClick={() => handleSendRequest("ignored" , _id)}>Ignore</button>
+                        <button className="btn btn-primary" onClick={() => handleSendRequest("interested" , _id)}>Interested</button>
                     </div>
                 </div>
             </div>

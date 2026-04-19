@@ -27,7 +27,7 @@ const Connections = () => {
     if (connections.length === 0) return <p className='text-center text-xl my-10'>No Connections Found</p>
 
     return (
-        <div className='text-center my-5'>
+        <div className='text-center my-5 pb-6 pt-5'>
             <h1 className='text-white text-bold text-3xl'>Connections</h1>
             {
                 connections.map((connection) => {
@@ -42,10 +42,10 @@ const Connections = () => {
                                         className='w-20 h-20 rounded-full '
                                     />
                                 </div>
-                                <div>
+                                <div className='max-w-75'>
                                     <h1 className='font-bold text-xl'>{firstName + " " + lastName}</h1>
                                     {gender && age && <p>{age + " , " + gender}</p>}
-                                    <p>{about}</p>
+                                    <p className='max-h-10 overflow-hidden'>{about}</p>
                                 </div>
                             </div>
                             <Link to={"/chat/"+_id}>
