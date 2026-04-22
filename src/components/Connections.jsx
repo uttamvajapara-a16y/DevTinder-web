@@ -3,7 +3,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants"
 import { useDispatch, useSelector } from 'react-redux';
 import { addConnections } from "../utils/connectionSlice"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const Connections = () => {
     const connections = useSelector(state => state.connections);
@@ -28,28 +28,28 @@ const Connections = () => {
 
     return (
         <div className='text-center my-5 pb-6 pt-5'>
-            <h1 className='text-white text-bold text-3xl'>Connections</h1>
+            <h1 className='text-white font-semibold text-3xl mb-5 tracking-wide'>Connections</h1>
             {
                 connections.map((connection) => {
                     const { _id, firstName, lastName, photoUrl, age, gender, about } = connection;
                     return (
-                        <div key={_id} className='flex flex-row justify-between rounded-lg bg-base-300 p-4 w-1/3 m-4 text-left mx-auto'>
-                            <div className='flex gap-5'>
+                        <div key={_id} className='flex items-center justify-between w-150 mx-auto mb-5 px-6 py-4 rounded-2xl bg-slate-900/80  border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300'>
+                            <div className='flex items-center gap-5'>
                                 <div>
                                     <img
                                         src={photoUrl}
                                         alt="user Photo"
-                                        className='w-20 h-20 rounded-full '
+                                        className='w-18 h-18 rounded-full object-cover border border-white/10'
                                     />
                                 </div>
-                                <div className='max-w-75'>
-                                    <h1 className='font-bold text-xl'>{firstName + " " + lastName}</h1>
-                                    {gender && age && <p>{age + " , " + gender}</p>}
-                                    <p className='max-h-10 overflow-hidden'>{about}</p>
+                                <div className='text-left max-w-75'>
+                                    <h1 className='text-white text-lg font-semibold'>{firstName + " " + lastName}</h1>
+                                    {gender && age && <p className='text-sm text-slate-400'>{age + " , " + gender}</p>}
+                                    <p className='text-sm text-slate-300 max-w-xs truncate'>{about}</p>
                                 </div>
                             </div>
-                            <Link to={"/chat/"+_id}>
-                                <button className='btn btn-primary m-5'>chat</button>
+                            <Link to={"/chat/" + _id}>
+                                <button className="btn mt-5 inline-flex items-center justify-center rounded-3xl bg-linear-to-r from-fuchsia-500 via-violet-500 to-sky-500 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-fuchsia-500/20 transition hover:brightness-110">chat</button>
                             </Link>
 
                         </div>
