@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 
 const Connections = () => {
     const connections = useSelector(state => state.connections);
+    const onlineUsers = useSelector(state => state.onlineUsers);
     const dispatch = useDispatch();
 
     const fetchConnections = async () => {
@@ -32,15 +33,19 @@ const Connections = () => {
             {
                 connections.map((connection) => {
                     const { _id, firstName, lastName, photoUrl, age, gender, about } = connection;
+                    // console.log(_id) ;
                     return (
                         <div key={_id} className='flex items-center justify-between w-150 mx-auto mb-5 px-6 py-4 rounded-2xl bg-slate-900/80  border border-white/10 shadow-lg hover:shadow-xl transition-all duration-300'>
                             <div className='flex items-center gap-5'>
-                                <div>
+                                <div className='relative'>
                                     <img
                                         src={photoUrl}
                                         alt="user Photo"
                                         className='w-18 h-18 rounded-full object-cover border border-white/10'
                                     />
+                                    {onlineUsers.includes(_id) && (
+                                        <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></span>
+                                    )}
                                 </div>
                                 <div className='text-left max-w-75'>
                                     <h1 className='text-white text-lg font-semibold'>{firstName + " " + lastName}</h1>
@@ -49,7 +54,7 @@ const Connections = () => {
                                 </div>
                             </div>
                             <Link to={"/chat/" + _id}>
-                                <button className="btn mt-5 inline-flex items-center justify-center rounded-3xl bg-linear-to-r from-fuchsia-500 via-violet-500 to-sky-500 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-fuchsia-500/20 transition hover:brightness-110">chat</button>
+                                <button className="btn inline-flex items-center justify-center rounded-3xl bg-linear-to-r from-fuchsia-500 via-violet-500 to-sky-500 px-4 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-fuchsia-500/20 transition hover:brightness-110">chat</button>
                             </Link>
 
                         </div>

@@ -1,42 +1,62 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import NavBar from './NavBar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Footer from './Footer'
-import axios  from "axios" ;
+import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../utils/constants';
 import { addUser } from '../utils/userSlice';
+import createSocketConnection from '../utils/socket';
+import { addOnlineUser } from '../utils/onlineUserSlice';
 
 const Body = () => {
-  const navigate = useNavigate() ;
-  const dispatch = useDispatch() ;
-  const userData = useSelector(state => state.data) ;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.data);
+  const user = useSelector((store) => store.user);
+  const socketRef = useRef(null);
 
   const fetchUser = async () => {
-    if(userData) {
-      return navigate("/feed") ;
-    } ;
-    
-    try{
-      const res = await axios.get(BASE_URL + "/profile/view" , {withCredentials : true}) ;
-      dispatch(addUser(res.data)) ;
+    if (userData) {
+      return navigate("/feed");
+    };
+
+    try {
+      const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
+      dispatch(addUser(res.data));
     } catch (err) {
-      if(err.status === 401){
-        navigate("/login") ;
+      if (err.status === 401) {
+        navigate("/login");
       }
-      console.log("Error in fetching user: " + err.message) ;
+      console.log("Error in fetching user: " + err.message);
     }
   }
 
   useEffect(() => {
-    fetchUser() ;
-  } , [])
+    fetchUser();
+  }, [])
+
+  useEffect(() => {
+    if (!user?._id) return;
+    
+    socketRef.current = createSocketConnection();
+    socketRef.current.emit("userOnline", user._id);
+
+    socketRef.current.on("onlineUsers", (onlineUsers) => {
+      console.log("Online Users:", onlineUsers);
+      dispatch(addOnlineUser(onlineUsers));
+    });
+
+    return () => {
+      socketRef.current?.disconnect();
+    };
+  }, [user?._id, dispatch])
 
   return (
     <div className='pt-8 pb-10'>
-      <NavBar/>
-      <Outlet/>
-      <Footer/>
+      <NavBar />
+      <Outlet />
+      <Footer />
     </div>
   )
 }

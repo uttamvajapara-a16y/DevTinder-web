@@ -61,3 +61,122 @@ const UserCard = ({ user , isDisabled}) => {
 }
 
 export default UserCard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import axios from 'axios';
+// import React from 'react'
+// import { BASE_URL } from '../utils/constants';
+// import { useDispatch } from 'react-redux';
+// import { removeUserFromFeed, addFeed } from '../utils/feedSlice';
+
+// const UserCard = ({ user }) => {
+//     const { _id , firstName, lastName, age, about, gender, photoUrl, skills } = user;
+//     const dispatch = useDispatch() ;
+
+//     const handleSendRequest = async (status, userId) => {
+//         try {
+//             const res = await axios.post(BASE_URL + "/request/send/" + status + "/" + userId , {} , {withCredentials: true});
+//             dispatch(removeUserFromFeed(userId)) ;
+
+//             // Refetch feed to get more users if needed
+//             const feedRes = await axios.get(BASE_URL + "/feed", { withCredentials: true });
+//             dispatch(addFeed(feedRes?.data));
+//         } catch (err) {
+//             console.log("Error in handling send request : " + err.message);
+//         }
+//     }
+
+//     return (
+//         <div className="flex min-h-screen items-center justify-center bg-slate-950 px-4 py-10">
+//             <div className="w-full max-w-sm overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-slate-900/95 via-slate-950/80 to-slate-900/95 shadow-[0_35px_120px_-35px_rgba(139,92,246,0.65)]">
+//                 <div className="relative overflow-hidden bg-slate-900">
+//                     <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-r from-fuchsia-500/20 via-purple-500/10 to-sky-500/15" />
+//                     <div className="relative flex h-52 items-center justify-center bg-slate-900">
+//                         {photoUrl ? (
+//                             <img
+//                                 src={photoUrl}
+//                                 alt="user photo"
+//                                 className="h-40 w-40 rounded-full border-4 border-white/10 object-cover shadow-xl shadow-violet-500/20 transition duration-500 hover:scale-105"
+//                             />
+//                         ) : (
+//                             <div className="flex h-40 w-40 items-center justify-center rounded-full border-4 border-white/10 bg-slate-800 text-5xl text-white/80 shadow-xl shadow-violet-500/20">
+//                                 {firstName?.[0] || "U"}
+//                             </div>
+//                         )}
+//                     </div>
+//                     <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent" />
+//                 </div>
+
+//                 <div className="space-y-5 p-6 text-slate-200">
+//                     <div className="text-center">
+//                         <p className="text-sm uppercase tracking-[0.26em] text-slate-400">Profile</p>
+//                         <h2 className="mt-3 text-3xl font-semibold text-white">{firstName} {lastName}</h2>
+//                         {age && gender && <p className="mt-2 text-sm text-slate-400">{`${age} years • ${gender}`}</p>}
+//                     </div>
+
+//                     {about && (
+//                         <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-inner shadow-slate-950/20">
+//                             <h3 className="mb-2 text-xs uppercase tracking-[0.3em] text-slate-400">About</h3>
+//                             <p className="text-sm leading-6 text-slate-200">{about}</p>
+//                         </div>
+//                     )}
+//                 </div>
+//             </div>
+//         </div>
+//     )
+// }
+
+// export default UserCard
