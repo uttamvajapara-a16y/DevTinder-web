@@ -39,8 +39,9 @@ const Login = () => {
   }
 
   return (
-    <div className='flex justify-center my-10'>
-      <div className="card bg-base-300 w-130 shadow-xl">
+    <div className='h-180 overflow-y-hidden'>
+      <div className='flex w-screen justify-center my-15'>
+      <div className="card bg-base-300 w-130 shadow-2xl">
         <div className="card-body">
           <h2 className="card-title justify-center"> {isLoginForm ? "Login" : "Sign Up"} </h2>
           <div>
@@ -96,6 +97,7 @@ const Login = () => {
           <p className='m-auto py-5 cursor-pointer' onClick={() => setIsLoginForm(value => !value)}>{isLoginForm ? "New User ? SignUp Here " : "already have an account? Login Here"}</p>
         </div>
       </div>
+    </div>
     </div>
   )
 }

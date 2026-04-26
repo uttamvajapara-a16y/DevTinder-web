@@ -37,7 +37,7 @@ function NavBar() {
     }, [])
 
     return (
-        <div className="navbar fixed top-0 left-0 right-0 z-50  bg-slate-900/80 backdrop-blur-xl border-b border-white/10 px-6 shadow-lg">
+        <div className="navbar fixed top-0 left-0 right-0 z-50 bg-black backdrop-blur-xl border-b border-gray-700 px-6 shadow-lg">
             <div className="flex-1">
                 <Link to="/feed" className="btn btn-ghost text-xl">👩🏻‍💻 DevTinder</Link>
             </div>
@@ -67,7 +67,6 @@ function NavBar() {
                         <li className='flex justify-between hover:bg-white/10 rounded-lg transition'>
 
                             <Link to="/requests" className="relative inline-block">Requests
-                                {/* {requests && requests.length >= 1 && <p className='text-red-600 text-2xl max-w-5'>•</p>} */}
                                 {requests && requests?.length > 0 &&
                                     <span className="absolute top-2 right-1 w-2 h-2 bg-red-500 rounded-full">
                                 </span>}

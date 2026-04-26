@@ -37,11 +37,11 @@ const Feed = () => {
   }, [dispatch])
 
   if (!feed) return;
-  if (feed.length === 0) return <p className='text-center text-xl my-10'>No New User Found</p>
+  if (feed.length === 0) return <p className='text-center text-xl my-86'>No New User Found</p>
 
   return (
     feed && <div>
-      <UserCard user={feed[0]} />
+      <UserCard user={feed[0]} mauto={true} />
     </div>
   )
 }

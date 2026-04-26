@@ -50,7 +50,7 @@ const PasswordChange = () => {
         }
     }
     return (
-        <div className='flex justify-center my-10'>
+        <div className='flex justify-center my-25'>
             <div className="card bg-base-300 w-130 shadow-xl">
                 <div className="card-body">
                     <div>

@@ -7,9 +7,11 @@ import { BASE_URL } from '../utils/constants';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate() ;
 
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
@@ -57,9 +59,9 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className='flex justify-center gap-5 overflow-hidden'>
-        <div className='flex justify-center my-10'>
-          <div className="card bg-base-200 w-130 shadow-xl">
+      <div className='inset-0 bg-black backdrop-blur-sm flex justify-center gap-5 overflow-hidden h-screen'>
+        <div className='justify-center my-15 bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl flex flex-col'>
+          <div className="card bg-[rgb(16,24,40,1)] border border-gray-800 w-130 shadow-xl">
             <div className="card-body">
               <h2 className="text-2xl font-semibold text-white text-center tracking-wide">Edit Profile</h2>
               <div>
@@ -67,7 +69,7 @@ const EditProfile = ({ user }) => {
                   <legend className="fieldset-legend text-slate-400 text-sm">First Name</legend>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900/70 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
+                    className="w-full px-4 py-3 rounded-xl bg-black border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
                     placeholder="Type here"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -77,7 +79,7 @@ const EditProfile = ({ user }) => {
                   <legend className="fieldset-legend text-slate-400 text-sm">Last Name</legend>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900/70 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
+                    className="w-full px-4 py-3 rounded-xl bg-black border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
                     placeholder="Type here"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
@@ -87,7 +89,7 @@ const EditProfile = ({ user }) => {
                   <legend className="fieldset-legend text-slate-400 text-sm">Age</legend>
                   <input
                     type="number"
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900/70 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
+                    className="w-full px-4 py-3 rounded-xl bg-black border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
                     placeholder="Type here"
                     value={age}
                     onChange={(e) => setAge(e.target.value)}
@@ -95,7 +97,7 @@ const EditProfile = ({ user }) => {
                 </fieldset>
                 <fieldset className="fieldset">
                   <legend className="fieldset-legend text-slate-400 text-sm">Gender</legend>
-                  <select value={gender} className="w-full px-4 py-3 rounded-xl bg-slate-900/70 border border-slate-700 text-white 
+                  <select value={gender} className="w-full px-4 py-3 rounded-xl bg-black border border-gray-700 text-white 
                      focus:outline-none focus:ring-2 focus:ring-violet-500 transition" onChange={(e) => setGender(e.target.value)}>
                     <option disabled={true}>Select Gender</option>
                     <option>male</option>
@@ -107,7 +109,7 @@ const EditProfile = ({ user }) => {
                   <legend className="fieldset-legend text-slate-400 text-sm">PhotoUrl</legend>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900/70 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
+                    className="w-full px-4 py-3 rounded-xl bg-black border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition"
                     placeholder="Type here"
                     value={photoUrl}
                     onChange={(e) => setPhotoUrl(e.target.value)}
@@ -116,21 +118,24 @@ const EditProfile = ({ user }) => {
                 <fieldset className="fieldset">
                   <legend className="fieldset-legend text-slate-400 text-sm">About</legend>
                   <textarea
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900/70 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-black border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 transition resize-none"
                     value={about}
                     onChange={(e) => setAbout(e.target.value)}
                     placeholder="Bio">
                   </textarea>
                 </fieldset>
               </div>
+              <p className='m-auto pt-2 cursor-pointer' onClick={() => navigate("/profile/changePassword")}>change password ?</p>
               <div className="card-actions justify-center mt-4">
-                <button className="btn inline-flex items-center justify-center rounded-3xl bg-linear-to-r from-fuchsia-500 via-violet-500 to-sky-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-fuchsia-500/20 transition hover:brightness-110" onClick={handleEdit}>Save Profile</button>
+                <button className="btn inline-flex items-center justify-center rounded-3xl  px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] border border-white hover:bg-green-600/90 hover:border-geeen-400 text-white transition" onClick={handleEdit}>Save Profile</button>
               </div>
             </div>
           </div>
         </div>
 
-        <UserCard user={{ firstName, lastName, photoUrl, age, about, gender }} isDisabled={true} />
+        <div className='my-auto'>
+          <UserCard user={{ firstName, lastName, photoUrl, age, about, gender }} isDisabled={true} mauto={false}/>
+        </div>
       </div>
 
       <ToastContainer

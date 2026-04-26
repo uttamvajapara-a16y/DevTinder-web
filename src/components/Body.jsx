@@ -53,7 +53,7 @@ const Body = () => {
   }, [user?._id, dispatch])
 
   return (
-    <div className='pt-8 pb-10'>
+    <div className='min-h-screen pt-10 bg-black/80'>
       <NavBar />
       <Outlet />
       <Footer />
