@@ -158,7 +158,7 @@ const UserCard = ({ user , isDisabled , mauto}) => {
                         <button
                             disabled={isDisabled}
                             onClick={() => handleSendRequest("ignored", _id)}
-                            className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-red-600 to-red-700 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-red-500/30 transform hover:scale-105 transition-all border border-red-500/30"
+                            className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-pink-500 to-rose-500 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-pink-500/30 transform hover:scale-105 transition-all border border-red-500/30"
                         >
                             <X className="w-6 h-6" />
                             IGNORE
@@ -166,7 +166,7 @@ const UserCard = ({ user , isDisabled , mauto}) => {
                         <button
                             disabled={isDisabled}
                             onClick={() => handleSendRequest("interested", _id)}
-                            className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-green-600 to-green-700 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/30 transform hover:scale-105 transition-all border border-green-500/30"
+                            className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-indigo-500 to-violet-500 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/30 transform hover:scale-105 transition-all border border-green-500/30"
                         >
                             <Heart className="w-6 h-6" />
                             INTERESTED

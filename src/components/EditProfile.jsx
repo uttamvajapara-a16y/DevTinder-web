@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate() ;
+  const navigate = useNavigate();
 
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
@@ -19,11 +19,12 @@ const EditProfile = ({ user }) => {
   const [gender, setGender] = useState(user?.gender);
   const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);
   const [about, setAbout] = useState(user?.about);
+  const [skills, setSkills] = useState(user?.skills);
   const [error, setError] = useState("");
 
   const handleEdit = async () => {
     try {
-      const res = await axios.patch(BASE_URL + "/profile/edit", { firstName, lastName, age, gender, photoUrl, about }, { withCredentials: true })
+      const res = await axios.patch(BASE_URL + "/profile/edit", { firstName, lastName, age, gender, photoUrl, about , skills}, { withCredentials: true })
       dispatch(addUser(res?.data?.data))
       setError("");
       toast.success('Profile saved successfully.', {
@@ -59,7 +60,7 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className='inset-0 bg-black backdrop-blur-sm flex justify-center gap-5 overflow-hidden h-screen'>
+      <div className='bg-black backdrop-blur-sm flex justify-center gap-5 pb-10'>
         <div className='justify-center my-15 bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl flex flex-col'>
           <div className="card bg-[rgb(16,24,40,1)] border border-gray-800 w-130 shadow-xl">
             <div className="card-body">
@@ -115,6 +116,22 @@ const EditProfile = ({ user }) => {
                     onChange={(e) => setPhotoUrl(e.target.value)}
                   />
                 </fieldset>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-300 mb-2">
+                    Skills
+                  </label>
+                  <input
+                    type="text"
+                    name="skills"
+                    value={skills}
+                    onChange={(e) => setSkills(e.target.value.split(",").map(skill => skill.trim()))}
+                    className="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-white placeholder-gray-500"
+                    placeholder="e.g., React, Node.js, TypeScript (comma-separated)"
+                  />
+                  <p className="text-sm text-gray-500 mt-1">
+                    Separate skills with commas
+                  </p>
+                </div>
                 <fieldset className="fieldset">
                   <legend className="fieldset-legend text-slate-400 text-sm">About</legend>
                   <textarea
@@ -134,7 +151,7 @@ const EditProfile = ({ user }) => {
         </div>
 
         <div className='my-auto'>
-          <UserCard user={{ firstName, lastName, photoUrl, age, about, gender }} isDisabled={true} mauto={false}/>
+          <UserCard user={{ firstName, lastName, photoUrl, age, about, gender, skills }} isDisabled={true} mauto={false} />
         </div>
       </div>
 
