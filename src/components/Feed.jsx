@@ -40,7 +40,7 @@ const Feed = () => {
   if (feed.length === 0) return <p className='text-center text-xl my-86'>No New User Found</p>
 
   return (
-    feed && <div>
+    feed && <div className='mt-26'>
       <UserCard user={feed[0]} mauto={true} />
     </div>
   )
