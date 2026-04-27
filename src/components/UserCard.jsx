@@ -23,7 +23,7 @@ const UserCard = ({ user , isDisabled , mauto}) => {
     }
 
     return (
-        <div className={"h-full w-full max-w-md mb-25 my-15 " + (mauto ? "mx-auto" : "" )} >
+        <div className={"h-full w-full max-w-md mb-20 my-15 hover:scale-105 transition duration-300 " + (mauto ? "mx-auto" : "" )} >
             <div className="bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden hover:shadow-purple-500/20 transition-all">
                 <div className="relative h-110 bg-linear-to-br from-gray-800 to-gray-900">
                     <img
@@ -47,7 +47,7 @@ const UserCard = ({ user , isDisabled , mauto}) => {
                             <GraduationCap className="w-5 h-5 text-purple-400" />
                             About
                         </h3>
-                        <p className="text-gray-400 leading-relaxed">{about}</p>
+                        <p className="text-gray-400 leading-relaxed wrap-break-word">{about}</p>
                     </div>
                     {skills?.length > 0 && <div className="mb-6">
                         <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
@@ -69,7 +69,7 @@ const UserCard = ({ user , isDisabled , mauto}) => {
                         <button
                             disabled={isDisabled}
                             onClick={() => handleSendRequest("ignored", _id)}
-                            className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-pink-500 to-rose-500 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-pink-500/30 transform hover:scale-105 transition-all border border-red-500/30"
+                            className="cursor-pointer flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-pink-500 to-rose-500 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-pink-500/30 transform hover:scale-105 transition-all border border-red-500/30"
                         >
                             <X className="w-6 h-6" />
                             IGNORE
@@ -77,7 +77,7 @@ const UserCard = ({ user , isDisabled , mauto}) => {
                         <button
                             disabled={isDisabled}
                             onClick={() => handleSendRequest("interested", _id)}
-                            className="flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-indigo-500 to-violet-500 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/30 transform hover:scale-105 transition-all border border-green-500/30"
+                            className="cursor-pointer flex-1 flex items-center justify-center gap-2 bg-linear-to-r from-indigo-500 to-violet-500 text-white py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-violet-500/30 transform hover:scale-105 transition-all border border-green-500/30"
                         >
                             <Heart className="w-6 h-6" />
                             INTERESTED

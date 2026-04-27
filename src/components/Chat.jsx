@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import createSocketConnection from '../utils/socket';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
+import { X, Paperclip, Smile, Send } from 'lucide-react'
 
 const Chat = () => {
     const { targetUserId } = useParams();
@@ -11,8 +12,12 @@ const Chat = () => {
     const [newMessage, setNewMessage] = useState("");
     const user = useSelector((store) => store.user);
     const userId = user?._id;
+    const navigate = useNavigate() ;
 
-    // for down scroll automatically
+    const connections = useSelector(state => state.connections);
+    const connection = connections?.find(conn => conn._id === targetUserId);
+    // console.log(connections) ;
+
     const bottomRef = useRef(null);
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -41,6 +46,10 @@ const Chat = () => {
         }
     }
 
+    const onClose = () => {
+        navigate("/connections");
+    }
+
     useEffect(() => {
         fatchChats()
     }, [])
@@ -67,60 +76,92 @@ const Chat = () => {
     }
 
     return (
-        <div className='w-175 mx-auto mt-10 h-[80vh] flex flex-col bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden'>
-            <h1 className='text-white text-lg font-semibold text-center py-4 border-b border-white/10 tracking-wide'>Chat</h1>
-            <div className='flex-1 px-4 py-5 overflow-y-auto space-y-3'>
-                {messages.map((msg, index) => {
-                    const date = new Date(msg.time).toLocaleDateString();
-                    const day = new Date(msg.time).toString().substring(0, 3);
-                    const isSameSender = index > 0 && messages[index - 1].firstName === msg.firstName && messages[index - 1].lastName === msg.lastName;
-                    const isSameDate = () => {
-                        if (index <= 0) return false;
-                        const preDate = new Date(messages[index - 1].time).toLocaleDateString();
-                        const currDate = new Date(msg.time).toLocaleDateString();
-                        if (preDate === currDate) return true;
-                        return false;
-                    }
-                    return (
-                        <div key={index}>
-                            {/* {!isSameDate() && <div className='flex justify-center items-center bg-base-300 text-xs p-1 w-25'>{date + "," + day}</div>} */}
-                            {!isSameDate() && <div className='flex justify-center'>
-                                <div className='text-xs px-3 py-1 rounded-full bg-white/10 text-slate-300 mb-2'>
-                                    {date + "," + day}
-                                </div>
-                            </div>}
-                            <div className={"chat " + (msg.firstName === user?.firstName ? "chat-end" : "chat-start")} >
-                                {/* {!isSameSender && <div className="chat-header">
-                                    {msg.firstName + " " + msg.lastName}
-                                </div>} */}
-                                <div className="px-4 py-2 rounded-2xl bg-slate-800 text-white shadow-md max-w-xs">
-                                    <div className='wrap-break-word text-sm leading-relaxed'>{msg.text}</div>
-                                    <div className="text-[10px] text-gray-400 mt-1 text-right">{new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
-                                </div>
-                                {/* {console.log(msg) } */}
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl h-150 flex flex-col">
+                <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-linear-to-r from-indigo-500 to-violet-500 text-white rounded-t-2xl">
+                    {/* bg-linear-to-r from-purple-600 to-pink-600 */}
+                    <div className="flex items-center gap-3">
+                        <div className="relative">
+                            <img
+                                src={connection?.photoUrl}
+                                alt={connection?.name}
+                                className="w-12 h-12 rounded-full border-2 border-white object-cover"
+                            />
+                            {/* <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div> */}
+                        </div>
+                        <div>
+                            <h3 className="font-semibold flex items-center gap-2">
+                                {connection?.firstName + " " + connection?.lastName}
+                            </h3>
+                            {/* <p className="text-sm text-white/80">{connection.lastSeen}</p> */}
+                        </div>
+                    </div>
+                    <button
+                        onClick={onClose}
+                        className="hover:bg-white/20 p-2 rounded-full transition-colors"
+                    >
+                        <X className="w-6 h-6" />
+                    </button>
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black">
+                    {messages.map((message, index) => (
+                        <div
+                            key={index}
+                            className={`flex ${message.firstName === user?.firstName ? "justify-end" : "justify-start"}`}
+                        >
+                            <div
+                                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${message.firstName === user?.firstName
+                                    ? "bg-linear-to-r from-indigo-500 to-violet-500 text-white rounded-br-none shadow-lg shadow-purple-500/20"
+                                    : "bg-gray-800 border border-gray-700 text-gray-200 rounded-bl-none"
+                                    }`}
+                            >
+                                <p className="text-sm leading-relaxed wrap-break-word">{message.text}</p>
+                                <p
+                                    className={`text-xs mt-1 ${message.firstName === user?.firstName ? "text-white/70" : "text-gray-500"
+                                        }`}
+                                >
+                                    {new Date(message?.time).toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    })}
+                                </p>
                             </div>
                         </div>
-                    )
-                })}
-                <div ref={bottomRef} />
-            </div>
-            <div className='p-4 border-t border-white/10 flex items-center gap-3 bg-slate-900'>
-                <input
-                    type="text"
-                    className='flex-1 px-4 py-2 rounded-xl bg-slate-800 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-violet-500 transition'
-                    placeholder='type message'
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") sendMessage();
-                    }}
-                />
-                <button className='px-5 py-2 rounded-xl text-white font-semibold bg-linear-to-r from-fuchsia-500 via-violet-500 to-cyan-500 hover:brightness-110 active:scale-95 transition-all shadow-md'>
-                    send
-                </button>
+                    ))}
+                    <div ref={bottomRef} />
+                </div>
+
+                <div className="p-4 border-t border-gray-800 bg-gray-900 rounded-b-2xl">
+                    <div className="flex items-end gap-2">
+                        <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                            <Paperclip className="w-5 h-5 text-gray-400 hover:text-purple-400 transition-colors" />
+                        </button>
+                        <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                            <Smile className="w-5 h-5 text-gray-400 hover:text-purple-400 transition-colors" />
+                        </button>
+                        <textarea
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") sendMessage();
+                            }}
+                            placeholder="Type a message..."
+                            className="flex-1 resize-none bg-black border border-gray-700 rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none max-h-32 text-white placeholder-gray-500"
+                            rows={1}
+                        />
+                        <button
+                            onClick={sendMessage}
+                            disabled={!newMessage.trim()}
+                            className="bg-linear-to-r from-indigo-500 to-violet-500 text-white p-3 rounded-xl hover:shadow-lg hover:shadow-purple-500/30 transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        >
+                            <Send className="w-5 h-5" />
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Chat

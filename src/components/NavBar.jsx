@@ -41,26 +41,28 @@ function NavBar() {
         <div className="navbar fixed top-0 left-0 right-0 z-50 bg-black backdrop-blur-xl border-b border-gray-700 px-6 shadow-lg">
             <div className="flex-1">
                 <Link to="/feed" className="btn btn-ghost text-xl">
-                    <div className="p-2 rounded-lg">
+                    <div className="p-2 rounded-lg bg-linear-to-r from-indigo-500 to-violet-500">
                         <Code2 className="w-5 h-5 text-white" />
                     </div>
-                    Dev-Tinder
+                    <span style={{ fontFamily: "'Pacifico', cursive" }} className="bg-linear-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent text-2xl">
+                        Dev-Tinder
+                    </span>
                 </Link>
             </div>
             <div className='flex gap-5 mr-15 justify-center text-lg'>
-                <div>
+                <div className='hover:scale-110 transition duration-300'>
                     <NavLink to="/feed" className={({ isActive }) => `flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${isActive ? "bg-linear-to-r from-purple-600/20 via-pink-600/20 to-red-600/20 text-white border border-purple-500/30" : "text-gray-400 hover:text-white hover:bg-gray-800"}`}>
                         <Sparkles className="w-5 h-5" />
                         <span className="hidden sm:inline">Feed</span>
                     </NavLink>
                 </div>
-                <div>
+                <div className='hover:scale-110 transition duration-300'>
                     <NavLink to="/connections" className={({ isActive }) => `flex gap-2 items-center px-4 py-2 rounded-lg transition-all ${isActive ? "bg-linear-to-r from-purple-600/20 via-pink-600/20 to-red-600/20 text-white border border-purple-500/30" : "text-gray-400 hover:text-white hover:bg-gray-800"}`}>
                         <Users className="w-5 h-5" />
                         <span className="hidden sm:inline">Connections</span>
                     </NavLink>
                 </div>
-                <div>
+                <div className='hover:scale-110 transition duration-300'>
                     <NavLink to="/requests" className={({ isActive }) => `flex gap-2 relative items-center px-4 py-2 rounded-lg transition-all ${isActive ? "bg-linear-to-r from-purple-600/20 via-pink-600/20 to-red-600/20 text-white border border-purple-500/30" : "text-gray-400 hover:text-white hover:bg-gray-800"}`}>
                         <UserPlus className="w-5 h-5" />
                         <span className="hidden sm:inline">Requests</span>
@@ -69,14 +71,14 @@ function NavBar() {
                             </span>}
                     </NavLink>
                 </div>
-                <div>
+                <div className='hover:scale-110 transition duration-300'>
                     <NavLink to="/profile" className={({ isActive }) => `flex gap-2 items-center px-4 py-2 rounded-lg transition-all ${isActive ? "bg-linear-to-r from-purple-600/20 via-pink-600/20 to-red-600/20 text-white border border-purple-500/30" : "text-gray-400 hover:text-white hover:bg-gray-800"}`}>
                         <User className="w-5 h-5" />
                         <span className="hidden sm:inline">Profile</span>
                     </NavLink>
                 </div>
-                <div>
-                    <p className='flex gap-2 items-center px-4 py-2 rounded-lg transition-all text-gray-400 hover:text-white hover:bg-gray-800 text-lg' onClick={handleLogout}>
+                <div className='hover:scale-110 transition duration-300'>
+                    <p className='cursor-pointer flex gap-2 items-center px-4 py-2 rounded-lg transition-all text-gray-400 hover:text-white hover:bg-gray-800 text-lg' onClick={handleLogout}>
                         <LogOut className="w-5 h-5" />
                         <span className="hidden sm:inline">Logout</span>
                     </p>
@@ -86,8 +88,8 @@ function NavBar() {
                 {user && <div className="dropdown dropdown-end mx-5">
                     <div className='flex gap-2'>
                         <p className='mx-3 my-2 text-white font-medium'>welcome {user.firstName}</p>
-                        <div role="button" className="btn btn-ghost btn-circle avatar overflow-hidden border border-white/10 cursor-pointer hover:scale-105 transition">
-                            <div className="w-10 rounded-full">
+                        <div role="button" className="btn btn-ghost btn-circle avatar overflow-hidden border border-white/10 cursor-pointer hover:scale-110 transition">
+                            <div className="w-10 rounded-full" onClick= {() => navigate("/profile")}>
                                 <img
                                     className='w-full h-full object-cover'
                                     alt="user photo"
@@ -102,3 +104,83 @@ function NavBar() {
 }
 
 export default NavBar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Cursive / Handwritten
+
+// Pacifico — smooth, friendly, rounded
+
+// Dancing Script — elegant, flowing cursive
+
+// Satisfy — clean, stylish handwriting
+
+// Righteous — bold, retro feel
+
+// Modern / Tech
+
+// Orbitron — futuristic, sci-fi, great for tech apps
+
+// Exo 2 — modern, geometric, very readable
+
+// Rajdhani — sharp, clean, tech-oriented
+
+// Oxanium — minimal, modern, developer-friendly
+
+// Bold / Display
+
+// Bebas Neue — tall, bold, impactful
+
+// Russo One — strong, solid, game-like
+
+// Audiowide — techy, bold, great for dev tools
+
+// Bungee — chunky, eye-catching
+
+// Elegant / Premium
+
+// Cinzel — luxury, serif, premium feel
+
+// Playfair Display — editorial, sophisticated
+
+// Cormorant Garamond — refined, classy
+
+// My recommendation for DevTinder specifically:
+
+// Orbitron — fits the developer/tech theme perfectly
+
+// Audiowide — modern tech feel, very readable
+
+// Exo 2 — clean and professional
+
+// Want me to apply any of these?
