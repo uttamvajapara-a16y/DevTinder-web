@@ -113,14 +113,13 @@ const Chat = () => {
                         }
 
                         return (
-                            <div>
+                            <div key={index}>
                                 {!isSameDate() && <div className='flex justify-center'>
                                     <div className='text-xs px-3 py-1 rounded-full bg-white/10 text-slate-300 mb-2'>
                                         {date + "," + day}
                                     </div>
                                 </div>}
                                 <div
-                                    key={index}
                                     className={`flex ${message.firstName === user?.firstName ? "justify-end" : "justify-start"}`}
                                 >
                                     <div
