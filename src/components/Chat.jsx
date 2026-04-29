@@ -5,11 +5,13 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
 import { X, Paperclip, Smile, Send } from 'lucide-react'
+import EmojiPicker from 'emoji-picker-react'
 
 const Chat = () => {
     const { targetUserId } = useParams();
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const user = useSelector((store) => store.user);
     const userId = user?._id;
     const navigate = useNavigate();
@@ -68,7 +70,6 @@ const Chat = () => {
     }, [userId, targetUserId])
 
     const sendMessage = () => {
-        // const socket = createSocketConnection();
         socketRef.current.emit("sendMessage", { firstName: user?.firstName, lastName: user?.lastName, userId, targetUserId, text: newMessage });
         setNewMessage("");
     }
@@ -147,9 +148,25 @@ const Chat = () => {
                         <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
                             <Paperclip className="w-5 h-5 text-gray-400 hover:text-purple-400 transition-colors" />
                         </button>
-                        <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
-                            <Smile className="w-5 h-5 text-gray-400 hover:text-purple-400 transition-colors" />
-                        </button>
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowEmojiPicker(prev => !prev)}
+                                className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+                            >
+                                <Smile className="w-5 h-5 text-gray-400 hover:text-purple-400 transition-colors" />
+                            </button>
+                            {showEmojiPicker && (
+                                <div className="absolute bottom-12 left-0 z-50">
+                                    <EmojiPicker
+                                        theme="dark"
+                                        onEmojiClick={(emojiData) => {
+                                            setNewMessage(prev => prev + emojiData.emoji);
+                                            setShowEmojiPicker(false);
+                                        }}
+                                    />
+                                </div>
+                            )}
+                        </div>
                         <textarea
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
