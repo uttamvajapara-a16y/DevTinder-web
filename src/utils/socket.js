@@ -1,19 +1,20 @@
-import {io} from "socket.io-client" ;
+import { io } from "socket.io-client";
 import { BASE_URL } from "./constants";
 
 const createSocketConnection = () => {
-    // return io(BASE_URL) ;
-    return io(BASE_URL, {
+    
+    const socket = io(BASE_URL, {
+        transports: ["polling", "websocket"], // 🔥 TRY POLLING FIRST
+        withCredentials: true,
         reconnection: true,
+        reconnectionAttempts: 10,
         reconnectionDelay: 1000,
         reconnectionDelayMax: 5000,
-        reconnectionAttempts: 5,
-        // Prevent storage access attempts
-        transports: ['websocket', 'polling'],
-        withCredentials: true,
-        // Disable local storage usage
-        autoConnect: true
     });
-}
+    return socket;
 
-export default createSocketConnection ;
+    // const socket = io(BASE_URL);
+    // return socket;
+};
+
+export default createSocketConnection;

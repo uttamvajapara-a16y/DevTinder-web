@@ -12,26 +12,24 @@ const Chat = () => {
     const [newMessage, setNewMessage] = useState("");
     const user = useSelector((store) => store.user);
     const userId = user?._id;
-    const navigate = useNavigate() ;
+    const navigate = useNavigate();
 
+    const onlineUsers = useSelector(state => state.onlineUsers);
     const connections = useSelector(state => state.connections);
-    const connection = connections?.find(conn => conn._id === targetUserId);
-    // console.log(connections) ;
+    const connection = connections?.find(conn => conn?.data?._id === targetUserId);
 
     const bottomRef = useRef(null);
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    const socketRef = useRef(null); // for one time socket creation
+    const socketRef = useRef(null);
 
 
     const fatchChats = async () => {
         try {
             const res = await axios.get(BASE_URL + "/chat/" + targetUserId, { withCredentials: true });
-            // console.log(res?.data?.messages)
-            const messages = res?.data?.messages;
-            // console.log(messages)
+            const messages = res?.data?.messages || [];
             const chatMessages = messages.map((msg) => {
                 return {
                     firstName: msg.senderId.firstName,
@@ -57,15 +55,15 @@ const Chat = () => {
     useEffect(() => {
         if (!userId) return;
         socketRef.current = createSocketConnection();
-        socketRef.current.emit("joinChat", { firstName: user?.firstName, lastName: user?.lastName, userId, targetUserId });
 
+        socketRef.current.emit("joinChat", { firstName: user?.firstName, lastName: user?.lastName, userId, targetUserId });
 
         socketRef.current.on("messageReceived", ({ firstName, lastName, text }) => {
             setMessages((messages) => [...messages, { firstName, lastName, text, time: new Date() }]);
         })
 
         return () => {
-            socketRef.current.disconnect();
+            socketRef.current?.disconnect();
         }
     }, [userId, targetUserId])
 
@@ -79,21 +77,18 @@ const Chat = () => {
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <div className="bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl h-150 flex flex-col">
                 <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-linear-to-r from-indigo-500 to-violet-500 text-white rounded-t-2xl">
-                    {/* bg-linear-to-r from-purple-600 to-pink-600 */}
                     <div className="flex items-center gap-3">
                         <div className="relative">
                             <img
-                                src={connection?.photoUrl}
-                                alt={connection?.name}
+                                src={connection?.data?.photoUrl}
+                                alt={connection?.data?.firstName}
                                 className="w-12 h-12 rounded-full border-2 border-white object-cover"
                             />
-                            {/* <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div> */}
                         </div>
                         <div>
                             <h3 className="font-semibold flex items-center gap-2">
-                                {connection?.firstName + " " + connection?.lastName}
+                                {connection?.data?.firstName + " " + connection?.data?.lastName}
                             </h3>
-                            {/* <p className="text-sm text-white/80">{connection.lastSeen}</p> */}
                         </div>
                     </div>
                     <button
@@ -105,30 +100,46 @@ const Chat = () => {
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black">
-                    {messages.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`flex ${message.firstName === user?.firstName ? "justify-end" : "justify-start"}`}
-                        >
-                            <div
-                                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${message.firstName === user?.firstName
-                                    ? "bg-linear-to-r from-indigo-500 to-violet-500 text-white rounded-br-none shadow-lg shadow-purple-500/20"
-                                    : "bg-gray-800 border border-gray-700 text-gray-200 rounded-bl-none"
-                                    }`}
-                            >
-                                <p className="text-sm leading-relaxed wrap-break-word">{message.text}</p>
-                                <p
-                                    className={`text-xs mt-1 ${message.firstName === user?.firstName ? "text-white/70" : "text-gray-500"
-                                        }`}
+                    {messages.map((message, index) => {
+
+                        const date = new Date(message.time).toLocaleDateString();
+                        const day = new Date(message.time).toString().substring(0, 3);
+                        const isSameDate = () => {
+                            if (index <= 0) return false;
+                            const preDate = new Date(messages[index - 1].time).toLocaleDateString();
+                            const currDate = new Date(message.time).toLocaleDateString();
+                            if (preDate === currDate) return true;
+                            return false;
+                        }
+
+                        return (
+                            <div>
+                                {!isSameDate() && <div className='flex justify-center'>
+                                    <div className='text-xs px-3 py-1 rounded-full bg-white/10 text-slate-300 mb-2'>
+                                        {date + "," + day}
+                                    </div>
+                                </div>}
+                                <div
+                                    key={index}
+                                    className={`flex ${message.firstName === user?.firstName ? "justify-end" : "justify-start"}`}
                                 >
-                                    {new Date(message?.time).toLocaleTimeString([], {
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                    })}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
+                                    <div
+                                        className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${message.firstName === user?.firstName
+                                            ? "bg-linear-to-r from-indigo-500 to-violet-500 text-white rounded-br-none shadow-lg shadow-purple-500/20"
+                                            : "bg-gray-800 border border-gray-700 text-gray-200 rounded-bl-none"
+                                            }`}
+                                    >
+                                        <p className="text-sm leading-relaxed wrap-break-word">{message.text}</p>
+                                        <p className={`text-xs mt-1 ${message.firstName === user?.firstName ? "text-white/70" : "text-gray-500"}`}>
+                                            {new Date(message?.time).toLocaleTimeString([], {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                            })}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>)
+                    })}
                     <div ref={bottomRef} />
                 </div>
 
@@ -144,7 +155,10 @@ const Chat = () => {
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
                             onKeyDown={(e) => {
-                                if (e.key === "Enter") sendMessage();
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    sendMessage();
+                                }
                             }}
                             placeholder="Type a message..."
                             className="flex-1 resize-none bg-black border border-gray-700 rounded-xl px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none max-h-32 text-white placeholder-gray-500"

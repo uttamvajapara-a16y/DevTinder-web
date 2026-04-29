@@ -17,13 +17,14 @@ const Body = () => {
   const socketRef = useRef(null);
 
   const fetchUser = async () => {
-    if (userData) {
+    if (user) {
       return navigate("/feed");
     };
 
     try {
       const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
       dispatch(addUser(res.data));
+      navigate("/feed");
     } catch (err) {
       if (err.status === 401) {
         navigate("/login");
@@ -38,12 +39,11 @@ const Body = () => {
 
   useEffect(() => {
     if (!user?._id) return;
-    
+
     socketRef.current = createSocketConnection();
     socketRef.current.emit("userOnline", user._id);
 
     socketRef.current.on("onlineUsers", (onlineUsers) => {
-      console.log("Online Users:", onlineUsers);
       dispatch(addOnlineUser(onlineUsers));
     });
 

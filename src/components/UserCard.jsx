@@ -23,9 +23,9 @@ const UserCard = ({ user , isDisabled , mauto}) => {
     }
 
     return (
-        <div className={"h-full w-full max-w-md mb-20 my-15 hover:scale-105 transition duration-300 " + (mauto ? "mx-auto" : "" )} >
+        <div className={"h-180 w-110 max-w-md mb-8 hover:scale-105 transition duration-300 " + (mauto ? "mx-auto" : "" )} >
             <div className="bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl overflow-hidden hover:shadow-purple-500/20 transition-all">
-                <div className="relative h-110 bg-linear-to-br from-gray-800 to-gray-900">
+                <div className="relative min-h-100 bg-linear-to-br from-gray-800 to-gray-900">
                     <img
                         src={photoUrl}
                         alt="user photo"

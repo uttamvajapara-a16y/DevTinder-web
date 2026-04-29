@@ -49,7 +49,7 @@ function NavBar() {
                     </span>
                 </Link>
             </div>
-            <div className='flex gap-5 mr-15 justify-center text-lg'>
+            {user && <div className='flex gap-5 mr-15 justify-center text-lg'>
                 <div className='hover:scale-110 transition duration-300'>
                     <NavLink to="/feed" className={({ isActive }) => `flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${isActive ? "bg-linear-to-r from-purple-600/20 via-pink-600/20 to-red-600/20 text-white border border-purple-500/30" : "text-gray-400 hover:text-white hover:bg-gray-800"}`}>
                         <Sparkles className="w-5 h-5" />
@@ -83,7 +83,7 @@ function NavBar() {
                         <span className="hidden sm:inline">Logout</span>
                     </p>
                 </div>
-            </div>
+            </div>}
             <div className="flex gap-2">
                 {user && <div className="dropdown dropdown-end mx-5">
                     <div className='flex gap-2'>

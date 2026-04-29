@@ -33,7 +33,7 @@ const Requests = () => {
     }, [])
 
     if (!requests) return;
-    if (requests.length === 0) return <p className='text-center my-10 text-xl'>No Requests Found</p>
+    if (requests.length === 0) return <p className='min-h-[80vh] text-center my-10 text-xl'>No Requests Found</p>
 
     return (
         <div className="min-h-[calc(100vh-128px)] py-8 px-4 bg-black">

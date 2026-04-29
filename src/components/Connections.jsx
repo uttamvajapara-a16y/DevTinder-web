@@ -36,7 +36,7 @@ const Connections = () => {
 
     if (!connections) return;
 
-    if (connections.length === 0) return <p className='text-center text-xl my-10'>No Connections Found</p>
+    if (connections.length === 0) return <p className='min-h-[80vh] text-center text-xl my-10'>No Connections Found</p>
 
     return (
         <div className="min-h-[calc(100vh-128px)] py-8 px-4 bg-black mb-15 mt-5">
@@ -54,6 +54,7 @@ const Connections = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {connections.map((connection) => {
                         const { _id, firstName, lastName, photoUrl, age, gender, about, skills } = connection.data;
+                        
 
                         return(<div
                             key={connection._id}
@@ -98,7 +99,7 @@ const Connections = () => {
                                 </div>
 
                                 <div className="mt-auto">
-                                    <Link to={"/chat/" + connection._id}>
+                                    <Link to={"/chat/" + _id}>
                                         <button
                                             className="cursor-pointer w-full flex items-center justify-center gap-2 bg-linear-to-r from-indigo-500 to-violet-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/30 transform hover:scale-105 transition-all"
                                         >
