@@ -28,13 +28,19 @@ const Feed = () => {
   const socketRef = useRef(null);
 
   useEffect(() => {
+    if (!user?._id) return;
+
     socketRef.current = createSocketConnection();
-    socketRef.current.emit("userOnline", user?._id);
+    socketRef.current.emit("userOnline", user._id);
 
     socketRef.current.on("onlineUsers", (onlineUsers) => {
       dispatch(addOnlineUser(onlineUsers));
-    })
-  }, [dispatch])
+    });
+
+    return () => {
+      socketRef.current?.disconnect();
+    };
+  }, [user?._id, dispatch])
 
   if (!feed) return;
   if (feed.length === 0) return <p className='min-h-[80vh] text-center text-xl my-10'>No New User Found</p>

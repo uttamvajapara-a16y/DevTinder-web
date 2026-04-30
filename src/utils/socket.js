@@ -2,9 +2,10 @@ import { io } from "socket.io-client";
 import { BASE_URL } from "./constants";
 
 const createSocketConnection = () => {
+    const SOCKET_URL = BASE_URL.replace("/api", "");
     
-    const socket = io(BASE_URL, {
-        transports: ["polling", "websocket"], // 🔥 TRY POLLING FIRST
+    const socket = io(SOCKET_URL, {
+        transports: ["websocket", "polling"], // 🔥 TRY WEBSOCKET FIRST
         withCredentials: true,
         reconnection: true,
         reconnectionAttempts: 10,
