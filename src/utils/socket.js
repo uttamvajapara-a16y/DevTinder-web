@@ -12,9 +12,6 @@ const createSocketConnection = () => {
         reconnectionDelayMax: 5000,
     });
     return socket;
-
-    // const socket = io(BASE_URL);
-    // return socket;
 };
 
 export default createSocketConnection;
