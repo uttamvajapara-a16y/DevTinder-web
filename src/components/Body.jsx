@@ -12,7 +12,6 @@ import { addOnlineUser } from '../utils/onlineUserSlice';
 const Body = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userData = useSelector(state => state.data);
   const user = useSelector((store) => store.user);
   const socketRef = useRef(null);
 
@@ -35,7 +34,7 @@ const Body = () => {
 
   useEffect(() => {
     fetchUser();
-  }, [])
+  }, [user])
 
   useEffect(() => {
     if (!user?._id) return;

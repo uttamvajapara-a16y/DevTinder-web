@@ -21,7 +21,7 @@ const Requests = () => {
 
     const reviewRequest = async (status, _id) => {
         try {
-            const res = await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, { withCredentials: true });
+            await axios.post(BASE_URL + "/request/review/" + status + "/" + _id, {}, { withCredentials: true });
             dispatch(removeRequest(_id))
         } catch (err) {
             console.log("Error in review request : " + err.message);
@@ -30,7 +30,7 @@ const Requests = () => {
 
     useEffect(() => {
         fetchRequests();
-    }, [])
+    }, [requests])
 
     if (!requests) return;
     if (requests.length === 0) return <p className='min-h-[80vh] text-center my-10 text-xl'>No Requests Found</p>

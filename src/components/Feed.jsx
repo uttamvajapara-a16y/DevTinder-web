@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import UserCard from "./UserCard";
 import { BASE_URL } from '../utils/constants';
 import axios from "axios";
@@ -23,7 +23,7 @@ const Feed = () => {
 
   useEffect(() => {
     getFeed();
-  }, [])
+  }, [feed])
 
   const socketRef = useRef(null);
 

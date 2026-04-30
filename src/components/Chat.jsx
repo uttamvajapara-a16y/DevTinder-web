@@ -15,8 +15,7 @@ const Chat = () => {
     const user = useSelector((store) => store.user);
     const userId = user?._id;
     const navigate = useNavigate();
-
-    const onlineUsers = useSelector(state => state.onlineUsers);
+    
     const connections = useSelector(state => state.connections);
     const connection = connections?.find(conn => conn?.data?._id === targetUserId);
 
@@ -27,32 +26,29 @@ const Chat = () => {
 
     const socketRef = useRef(null);
 
-
-    const fatchChats = async () => {
-        try {
-            const res = await axios.get(BASE_URL + "/chat/" + targetUserId, { withCredentials: true });
-            const messages = res?.data?.messages || [];
-            const chatMessages = messages.map((msg) => {
-                return {
-                    firstName: msg.senderId.firstName,
-                    lastName: msg.senderId.lastName,
-                    text: msg.text,
-                    time: msg.createdAt
-                }
-            })
-            setMessages(chatMessages);
-        } catch (err) {
-            console.log("Error in api call to get chats :: " + err.message);
-        }
-    }
-
     const onClose = () => {
         navigate("/connections");
     }
 
     useEffect(() => {
-        fatchChats()
-    }, [])
+        const fetchChats = async () => {
+            try {
+                const res = await axios.get(BASE_URL + "/chat/" + targetUserId, { withCredentials: true });
+                const messages = res?.data?.messages || [];
+                const chatMessages = messages.map((msg) => ({
+                    firstName: msg.senderId.firstName,
+                    lastName: msg.senderId.lastName,
+                    text: msg.text,
+                    time: msg.createdAt,
+                }));
+                setMessages(chatMessages);
+            } catch (err) {
+                console.log("Error in api call to get chats :: " + err.message);
+            }
+        };
+
+        fetchChats();
+    }, [targetUserId])
 
     useEffect(() => {
         if (!userId) return;

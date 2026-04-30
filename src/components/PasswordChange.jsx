@@ -8,15 +8,14 @@ const PasswordChange = () => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
-    const [err, setError] = useState("");
+    const [error, setError] = useState("");
 
     const handleSubmit = async () => {
         try {
             if (newPassword !== confirmNewPassword) {
                 setError("New Password and Confirm New Password must be same");
             }
-            const res = await axios.patch(BASE_URL + "/profile/changePassword", { oldPassword, newPassword }, { withCredentials: true });
-            // console.log(res);
+            await axios.patch(BASE_URL + "/profile/changePassword", { oldPassword, newPassword }, { withCredentials: true });
             toast.success('Password Changed successfully.', {
                 toastId: nanoid(),
                 position: "top-center",
@@ -34,8 +33,7 @@ const PasswordChange = () => {
             setConfirmNewPassword("");
         } catch (err) {
             const errMsg = err?.response?.data || "something went wrong";
-            setError(errMsg)
-            toast.error(errMsg, {
+            {!error && toast.error(errMsg, {
                 toastId: nanoid(),
                 position: "top-center",
                 autoClose: 5000,
@@ -46,13 +44,14 @@ const PasswordChange = () => {
                 progress: undefined,
                 theme: "dark",
                 transition: Bounce,
-            });
+            });}
         }
     }
     return (
         <div className='flex justify-center my-25'>
             <div className="card bg-base-300 w-130 shadow-xl">
                 <div className="card-body">
+                    <p className='text-red-600 text-center'>{error}</p>
                     <div>
                         <fieldset className="fieldset">
                             <legend className="fieldset-legend text-slate-400 text-sm">Old Password</legend>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import axios from "axios";
 import { BASE_URL } from "../utils/constants"
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,18 +22,15 @@ const Connections = () => {
 
     const handleRemoveConnection = async (connectionId) => {
         try{
-            const res = await axios.delete(BASE_URL + "/user/removeConnection/" + connectionId , { withCredentials: true });
-            // console.log(res)
+            await axios.delete(BASE_URL + "/user/removeConnection/" + connectionId , { withCredentials: true });
             dispatch(removeConnections(connectionId))
         } catch (err) {
             console.log("Error in removing connection : " + err.message);
         }
     }
 
-    useEffect(() => {
-        fetchConnections();
-    }, [])
-
+    fetchConnections();
+    
     if (!connections) return;
 
     if (connections.length === 0) return <p className='min-h-[80vh] text-center text-xl my-10'>No Connections Found</p>

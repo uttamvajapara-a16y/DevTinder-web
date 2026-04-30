@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import UserCard from './UserCard';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
@@ -20,13 +20,11 @@ const EditProfile = ({ user }) => {
   const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);
   const [about, setAbout] = useState(user?.about);
   const [skills, setSkills] = useState(user?.skills);
-  const [error, setError] = useState("");
 
   const handleEdit = async () => {
     try {
       const res = await axios.patch(BASE_URL + "/profile/edit", { firstName, lastName, age, gender, photoUrl, about , skills}, { withCredentials: true })
       dispatch(addUser(res?.data?.data))
-      setError("");
       toast.success('Profile saved successfully.', {
         toastId: nanoid(),
         position: "top-center",
@@ -41,7 +39,6 @@ const EditProfile = ({ user }) => {
       });
     } catch (err) {
       const errMsg = err?.response?.data || "somthing went wrong";
-      setError(errMsg);
       toast.error(errMsg, {
         toastId: nanoid(),
         position: "top-center",

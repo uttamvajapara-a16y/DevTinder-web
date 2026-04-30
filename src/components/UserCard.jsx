@@ -11,10 +11,8 @@ const UserCard = ({ user , isDisabled , mauto}) => {
 
     const handleSendRequest = async (status, userId) => {
         try {
-            const res = await axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, { withCredentials: true });
+            await axios.post(BASE_URL + "/request/send/" + status + "/" + userId, {}, { withCredentials: true });
             dispatch(removeUserFromFeed(userId));
-
-            // Refetch feed to get more users if needed
             const feedRes = await axios.get(BASE_URL + "/feed", { withCredentials: true });
             dispatch(addFeed(feedRes?.data));
         } catch (err) {
