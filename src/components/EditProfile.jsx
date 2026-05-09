@@ -16,7 +16,7 @@ const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user?.firstName);
   const [lastName, setLastName] = useState(user?.lastName);
   const [age, setAge] = useState(user?.age || 18);
-  const [gender, setGender] = useState(user?.gender);
+  const [gender, setGender] = useState(user.gender || "");
   const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);
   const [about, setAbout] = useState(user?.about);
   const [skills, setSkills] = useState(user?.skills);
@@ -97,7 +97,7 @@ const EditProfile = ({ user }) => {
                   <legend className="fieldset-legend text-slate-400 text-sm">Gender</legend>
                   <select value={gender} className="w-full px-4 py-3 rounded-xl bg-black border border-gray-700 text-white 
                      focus:outline-none focus:ring-2 focus:ring-violet-500 transition" onChange={(e) => setGender(e.target.value)}>
-                    <option disabled={true}>Select Gender</option>
+                    <option value="" disabled>Select Gender</option>
                     <option>male</option>
                     <option>female</option>
                     <option>other</option>
