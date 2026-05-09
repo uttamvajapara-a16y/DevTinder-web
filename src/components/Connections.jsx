@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from "axios";
 import { BASE_URL } from "../utils/constants"
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,26 +11,28 @@ const Connections = () => {
     const onlineUsers = useSelector(state => state.onlineUsers);
     const dispatch = useDispatch();
 
-    const fetchConnections = async () => {
-        try {
-            const res = await axios.get(BASE_URL + "/user/connections", { withCredentials: true });
-            dispatch(addConnections(res?.data?.data))
-        } catch (err) {
-            console.log("Error in fetching Connection : " + err.message);
-        }
-    }
+    useEffect(() => {
+        const fetchConnections = async () => {
+            try {
+                const res = await axios.get(BASE_URL + "/user/connections", { withCredentials: true });
+                dispatch(addConnections(res?.data?.data));
+            } catch (err) {
+                console.log("Error in fetching Connection : " + err.message);
+            }
+        };
+
+        fetchConnections();
+    }, [dispatch]);
 
     const handleRemoveConnection = async (connectionId) => {
-        try{
-            await axios.delete(BASE_URL + "/user/removeConnection/" + connectionId , { withCredentials: true });
+        try {
+            await axios.delete(BASE_URL + "/user/removeConnection/" + connectionId, { withCredentials: true });
             dispatch(removeConnections(connectionId))
         } catch (err) {
             console.log("Error in removing connection : " + err.message);
         }
     }
 
-    fetchConnections();
-    
     if (!connections) return;
 
     if (connections.length === 0) return <p className='min-h-[80vh] text-center text-xl my-10'>No Connections Found</p>
@@ -39,8 +41,8 @@ const Connections = () => {
         <div className="min-h-[calc(100vh-128px)] py-8 px-4 bg-black mb-15 mt-5">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-10">
-                    <h1 className="text-4xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent mb-2 flex items-center justify-center gap-3">
-                        <Users className="w-10 h-10 text-purple-400" />
+                    <h1 className="text-4xl font-bold bg-white bg-clip-text text-transparent mb-2 flex items-center justify-center gap-3">
+                        <Users className="w-10 h-10 text-white" />
                         Your Connections
                     </h1>
                     <p className="text-gray-400">
@@ -51,9 +53,9 @@ const Connections = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {connections.map((connection) => {
                         const { _id, firstName, lastName, photoUrl, age, gender, about, skills } = connection.data;
-                        
 
-                        return(<div
+
+                        return (<div
                             key={connection._id}
                             className="bg-gray-900 border border-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-purple-500/20 hover:border-gray-700 transition-all group flex flex-col"
                         >
@@ -64,8 +66,8 @@ const Connections = () => {
                                     alt={firstName}
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                                 />
-                                <button className='absolute top-2 right-2 bg-white/20 backdrop-blur-sm text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-500 transition-colors shadow-md' onClick={() => {handleRemoveConnection(connection._id)}}>
-                                    <X className='w-5 h-5'/>
+                                <button className='absolute top-2 right-2 bg-white/20 backdrop-blur-sm text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-500 transition-colors shadow-md' onClick={() => { handleRemoveConnection(connection._id) }}>
+                                    <X className='w-5 h-5' />
                                 </button>
                                 {onlineUsers.includes(_id) && (
                                     <span className="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></span>
@@ -98,7 +100,7 @@ const Connections = () => {
                                 <div className="mt-auto">
                                     <Link to={"/chat/" + _id}>
                                         <button
-                                            className="cursor-pointer w-full flex items-center justify-center gap-2 bg-linear-to-r from-indigo-500 to-violet-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/30 transform hover:scale-105 transition-all"
+                                            className="cursor-pointer w-full flex items-center justify-center gap-2 bg-indigo-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/30 transform hover:scale-105 transition-all"
                                         >
                                             <MessageCircle className="w-5 h-5" />
                                             Chat
@@ -106,8 +108,8 @@ const Connections = () => {
                                     </Link>
                                 </div>
                             </div>
-                        </div> )
-})}
+                        </div>)
+                    })}
                 </div>
             </div>
         </div>

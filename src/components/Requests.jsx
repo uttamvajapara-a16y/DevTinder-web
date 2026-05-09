@@ -9,15 +9,18 @@ const Requests = () => {
     const requests = useSelector(state => state.requests);
     const dispatch = useDispatch();
 
-    const fetchRequests = async () => {
-        try {
-            const res = await axios.get(BASE_URL + "/user/requests/received", { withCredentials: true });
-            // console.log(res) ;
-            dispatch(addRequests(res?.data?.data));
-        } catch (err) {
-            console.log("Error in fetching requests : " + err.message);
-        }
-    }
+    useEffect(() => {
+        const fetchRequests = async () => {
+            try {
+                const res = await axios.get(BASE_URL + "/user/requests/received", { withCredentials: true });
+                dispatch(addRequests(res?.data?.data));
+            } catch (err) {
+                console.log("Error in fetching requests : " + err.message);
+            }
+        };
+
+        fetchRequests();
+    }, [dispatch]);
 
     const reviewRequest = async (status, _id) => {
         try {
@@ -28,10 +31,6 @@ const Requests = () => {
         }
     }
 
-    useEffect(() => {
-        fetchRequests();
-    }, [requests])
-
     if (!requests) return;
     if (requests.length === 0) return <p className='min-h-[80vh] text-center my-10 text-xl'>No Requests Found</p>
 
@@ -39,8 +38,8 @@ const Requests = () => {
         <div className="min-h-[calc(100vh-128px)] py-8 px-4 bg-black">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-10">
-                    <h1 className="text-4xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent mb-2 flex items-center justify-center gap-3">
-                        <UserPlus className="w-10 h-10 text-pink-400" />
+                    <h1 className="text-4xl font-bold bg-white bg-clip-text text-transparent mb-2 flex items-center justify-center gap-3">
+                        <UserPlus className="w-10 h-10 text-white" />
                         Connection Requests
                     </h1>
                     <p className="text-gray-400">

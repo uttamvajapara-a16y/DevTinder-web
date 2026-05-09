@@ -73,7 +73,7 @@ const Chat = () => {
     return (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <div className="bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl h-150 flex flex-col">
-                <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-linear-to-r from-indigo-500 to-violet-500 text-white rounded-t-2xl">
+                <div className="flex items-center justify-between p-4 border-b border-gray-800 bg-indigo-500 text-white rounded-t-2xl">
                     <div className="flex items-center gap-3">
                         <div className="relative">
                             <img
@@ -121,7 +121,7 @@ const Chat = () => {
                                 >
                                     <div
                                         className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${message.firstName === user?.firstName
-                                            ? "bg-linear-to-r from-indigo-500 to-violet-500 text-white rounded-br-none shadow-lg shadow-purple-500/20"
+                                            ? "bg-indigo-500 text-white rounded-br-none shadow-lg shadow-purple-500/20"
                                             : "bg-gray-800 border border-gray-700 text-gray-200 rounded-bl-none"
                                             }`}
                                     >
@@ -141,9 +141,9 @@ const Chat = () => {
 
                 <div className="p-4 border-t border-gray-800 bg-gray-900 rounded-b-2xl">
                     <div className="flex items-end gap-2">
-                        <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                        {/* <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
                             <Paperclip className="w-5 h-5 text-gray-400 hover:text-purple-400 transition-colors" />
-                        </button>
+                        </button> */}
                         <div className="relative">
                             <button
                                 onClick={() => setShowEmojiPicker(prev => !prev)}
@@ -179,7 +179,7 @@ const Chat = () => {
                         <button
                             onClick={sendMessage}
                             disabled={!newMessage.trim()}
-                            className="bg-linear-to-r from-indigo-500 to-violet-500 text-white p-3 rounded-xl hover:shadow-lg hover:shadow-purple-500/30 transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                            className="bg-indigo-500 text-white p-3 rounded-xl hover:shadow-lg hover:shadow-purple-500/30 transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                         >
                             <Send className="w-5 h-5" />
                         </button>

@@ -16,9 +16,7 @@ const Body = () => {
   const socketRef = useRef(null);
 
   const fetchUser = async () => {
-    if (user) {
-      return navigate("/feed");
-    };
+    if (user) return;
 
     try {
       const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
@@ -52,7 +50,7 @@ const Body = () => {
   }, [user?._id, dispatch])
 
   return (
-    <div className='min-h-screen pt-10 bg-black/80'>
+    <div className='min-h-screen w-full overflow-x-hidden pt-16 bg-black/90'>
       <NavBar />
       <Outlet />
       <Footer />

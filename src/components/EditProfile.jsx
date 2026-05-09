@@ -57,9 +57,9 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className='bg-black backdrop-blur-sm flex justify-center gap-5 pb-10'>
+      <div className='bg-black backdrop-blur-sm flex flex-col md:flex-row overflow-y-scroll justify-center gap-5 pb-10'>
         <div className='justify-center my-15 bg-gray-900 border border-gray-800 rounded-2xl shadow-2xl flex flex-col'>
-          <div className="card bg-[rgb(16,24,40,1)] border border-gray-800 w-130 shadow-xl">
+          <div className="card bg-[rgb(16,24,40,1)] border border-gray-800 w-100 md:w-130 shadow-xl">
             <div className="card-body">
               <h2 className="text-xl font-semibold text-white text-center tracking-wide">Edit Profile</h2>
               <div>

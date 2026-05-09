@@ -85,7 +85,7 @@ const PasswordChange = () => {
                         </fieldset>
                     </div>
                     <div className="card-actions justify-center mt-4">
-                        <button className="btn inline-flex items-center justify-center rounded-3xl bg-linear-to-r from-fuchsia-500 via-violet-500 to-sky-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-lg shadow-fuchsia-500/20 transition hover:brightness-110" onClick={handleSubmit}>Change Password</button>
+                        <button className="btn inline-flex items-center justify-center rounded-3xl bg-indigo-500 px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-white shadow-lg" onClick={handleSubmit}>Change Password</button>
                     </div>
                 </div>
             </div>

@@ -4,9 +4,9 @@ import { Code2, Heart } from "lucide-react"
 export function Footer() {
     return (
         <footer className="bg-black border-t border-gray-800 text-gray-400 py-3 mt-auto">
-            <div className="min-w-[90vh] overflow-x-hidden mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col md:flex-row items-center justify-between">
-                    <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <div className="w-full overflow-x-hidden mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-row items-center justify-between">
+                    <div className="flex items-center space-x-2">
                         <div className="relative">
                             <div className="absolute inset-0 bg-linear-to-r from-indigo-500 to-violet-500 rounded-lg blur-md opacity-50"></div>
                             <div className="relative bg-linear-to-r from-indigo-500 to-violet-500 p-1.5 rounded-lg">
