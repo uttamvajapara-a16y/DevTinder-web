@@ -52,7 +52,9 @@ const Body = () => {
   return (
     <div className='min-h-screen w-full overflow-x-hidden pt-16 bg-black/90'>
       <NavBar />
-      <Outlet />
+      <main className="flex-1">
+        <Outlet />
+      </main>
       <Footer />
     </div>
   )

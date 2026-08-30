@@ -53,8 +53,6 @@ const Connections = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {connections.map((connection) => {
                         const { _id, firstName, lastName, photoUrl, age, gender, about, skills } = connection.data;
-
-
                         return (<div
                             key={connection._id}
                             className="bg-gray-900 border border-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-purple-500/20 hover:border-gray-700 transition-all group flex flex-col"
